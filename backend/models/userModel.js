@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema({
 })
 
 // Create the model class
-const User = mongoode.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 // Export the model
 module.exports = User;

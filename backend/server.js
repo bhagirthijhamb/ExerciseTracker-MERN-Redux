@@ -5,8 +5,14 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const connectDB = require('./../backend/config/db');
 // const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+
+require('./models/userModel');
+require('./models/exerciseModel');
+
 const app = express();
-const userRouter = require('./routes/users');
+
+
+require('./routes/authRoutes')(app);
 
 dotenv.config();
 connectDB();
@@ -15,7 +21,6 @@ connectDB();
 // Getting the express work the way we want it to
 app.use(morgan('dev'));
 app.use(express.json());
-userRouter(app);
 
 
 // Server Setup
