@@ -6,11 +6,13 @@ const morgan = require('morgan');
 // const connectDB = require('./config/db');
 // const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 const app = express();
+const userRouter = require('./routes/users');
 
 // App Setup
 // Getting the express work the way we want it to
 app.use(morgan('dev'));
 app.use(express.json());
+userRouter(app);
 
 
 // Server Setup
