@@ -3,10 +3,13 @@ const http = require('http');
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
-// const connectDB = require('./config/db');
+const connectDB = require('./../backend/config/db');
 // const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 const app = express();
 const userRouter = require('./routes/users');
+
+dotenv.config();
+connectDB();
 
 // App Setup
 // Getting the express work the way we want it to
