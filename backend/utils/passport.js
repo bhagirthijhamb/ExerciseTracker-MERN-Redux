@@ -1,5 +1,5 @@
 const passport = require('passport');
-const user = require('./../models/userModel');
+const User = require('./../models/userModel');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
@@ -17,13 +17,16 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done){
   User.findById(payload.sub, function(err, user){
     // error in search
     if(err) {
+      console.log('one', err)
       return done(err, false);
     }
     if(user){
       // found the user
+      console.log('two')
       done(null, user);
     } else {
       // found no user
+      console.log('three')
       done(null, false)
     }
   })

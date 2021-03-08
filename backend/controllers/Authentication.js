@@ -4,6 +4,7 @@ const User = require('../models/userModel');
 const { validateSignupData } = require('./../utils/validators');
 
 const tokenForUser = (user) => {
+  console.log(user);
   const timestamp = new Date().getTime();
   return jwt.encode({ sub: user.id, iat: timestamp }, process.env.JWT_SECRET)
 }
@@ -38,7 +39,7 @@ exports.signup = async (req, res, next) => {
 
     // Repond to the request  indicating the user was created
     // res.json(newUser);
-    res.json({ token: tokenForUser(user) });
+    res.json({ token: tokenForUser(newUser) });
   } catch (error){
     console.log(error)
     next(error)
