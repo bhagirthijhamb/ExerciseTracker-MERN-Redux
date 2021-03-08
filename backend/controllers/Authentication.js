@@ -25,7 +25,7 @@ exports.signup = async (req, res, next) => {
     // Repond to the request  indicating the user was created
     res.json(newUser);
   } catch (error){
-    console.log(error)
+    // console.log(error)
     next(error)
   }
 }

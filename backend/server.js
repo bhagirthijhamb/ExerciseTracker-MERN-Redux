@@ -4,7 +4,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const connectDB = require('./../backend/config/db');
-// const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+const errorHandlingMiddlewares = require('./middlewares/errorHandleMiddleware');
+const { error } = require('console');
 
 require('./models/userModel');
 require('./models/exerciseModel');
@@ -22,6 +23,9 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 require('./routes/authRoutes')(app);
+
+app.use(errorHandlingMiddlewares.notFound);
+app.use(errorHandlingMiddlewares.errorHandler);
 
 // Server Setup
 // Getting our express application to talk to the outside world
