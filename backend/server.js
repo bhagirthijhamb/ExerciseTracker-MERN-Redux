@@ -12,7 +12,6 @@ require('./models/exerciseModel');
 const app = express();
 
 
-require('./routes/authRoutes')(app);
 
 dotenv.config();
 connectDB();
@@ -22,6 +21,7 @@ connectDB();
 app.use(morgan('dev'));
 app.use(express.json());
 
+require('./routes/authRoutes')(app);
 
 // Server Setup
 // Getting our express application to talk to the outside world

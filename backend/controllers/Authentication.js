@@ -1,12 +1,31 @@
-exports.signup = function (req, res, next) {
-  const email = req.body.email;
-  const password = req.body.password;
+const User = require('./../models/userModel');
 
-  // See if a user with the given email exists
+exports.signup = async (req, res, next) => {
+  const { name, email, password } = req.body;
+  try {
+    // See if a user with the given email exists
+    const existingUser = await User.findOne({ email: email });
+    
+    // If a user with email exist, return an error
+    // if the user with email already exist,existingUser will have its value
+    // otherwise existingUserwill have null as its value
+    if(existingUser){
+      return res.status(422).send({ error: 'Email is in use' })
+    }
 
-  // If a user with email does exist, return an error
+    // If a user with email DOES NOT exits, create and save  user record
+    const user = new User({
+      name: name,
+      email: email,
+      password: password
+    })
 
-  // If a user with email DOES NOT exits, create and save  user record
+    const newUser = await user.save()
 
-  // Repond to the request  indicating the user was created
+    // Repond to the request  indicating the user was created
+    res.json(newUser);
+  } catch (error){
+    console.log(error)
+    next(error)
+  }
 }
