@@ -4,9 +4,17 @@ const User = require('../models/userModel');
 const { validateSignupData } = require('./../utils/validators');
 
 const tokenForUser = (user) => {
-  console.log(user);
   const timestamp = new Date().getTime();
   return jwt.encode({ sub: user.id, iat: timestamp }, process.env.JWT_SECRET)
+}
+
+exports.signin = function(req, res, next){
+  // User has already has their email and password auth'd
+  // We just need to give them a token
+
+  // req.user has value of user that was addded to it by done() callback of passsport
+  console.log(req.user);
+  res.send({ token: tokenForUser(req.user)});
 }
 
 exports.signup = async (req, res, next) => {

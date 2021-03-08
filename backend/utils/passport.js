@@ -2,11 +2,11 @@ const passport = require('passport');
 const User = require('./../models/userModel');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const LocalStrategy = require('passport-local');
+const localStrategy = require('passport-local');
 
 // Create local strategy
 const localOptions = { usernameField: 'email' };
-const localLogin = new LocalStrategy(localOptions, function(email, password, done){
+const localLogin = new localStrategy(localOptions, function(email, password, done){
   // Verify this username and pssword, call done with the user if it is the correct email and password
   // otherwise, call done with false
   // doing a search is asynchronous, so we provide a callback function
@@ -22,6 +22,17 @@ const localLogin = new LocalStrategy(localOptions, function(email, password, don
     }
 
     // compare passwords - is 'password' (supplied by the request by the user) equal to user.passsowrd (from the DB)
+    user.comparePasswords(password, function(err, isMatch){
+      if(err){
+        // call passport callback with err
+        return done(err);
+      }
+      if(!isMatch){
+        return done(null, false);
+      }
+      // call the passport callback with the user
+      return done(null, user); // passport assigns user to req.user, we can use it later 
+    })
   })
 })
 
@@ -53,3 +64,4 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done){
 
 // Tell passport to use this strategy
 passport.use(jwtLogin);
+passport.use(localLogin);
