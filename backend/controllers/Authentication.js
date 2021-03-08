@@ -1,7 +1,15 @@
-const User = require('./../models/userModel');
+const User = require('../models/userModel');
+const validators = require('./../utils/validators');
+// const { validateSignupData } = require('./../utils/validators');
 
 exports.signup = async (req, res, next) => {
   const { name, email, password } = req.body;
+  const { valid, errors } = validators.validateSignupData(req.body);
+
+  if(!valid) {
+    return res.status(422).json(errors);
+  }
+  
   try {
     // See if a user with the given email exists
     const existingUser = await User.findOne({ email: email });
