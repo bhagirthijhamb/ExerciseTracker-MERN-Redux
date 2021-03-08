@@ -1,15 +1,15 @@
 const User = require('../models/userModel');
-const validators = require('./../utils/validators');
-// const { validateSignupData } = require('./../utils/validators');
+// const validators = require('./../utils/validators');
+const { validateSignupData } = require('./../utils/validators');
 
 exports.signup = async (req, res, next) => {
   const { name, email, password } = req.body;
-  const { valid, errors } = validators.validateSignupData(req.body);
+  const { valid, errors } = validateSignupData(req.body);
 
   if(!valid) {
     return res.status(422).json(errors);
   }
-  
+
   try {
     // See if a user with the given email exists
     const existingUser = await User.findOne({ email: email });
@@ -33,7 +33,7 @@ exports.signup = async (req, res, next) => {
     // Repond to the request  indicating the user was created
     res.json(newUser);
   } catch (error){
-    // console.log(error)
+    console.log(error)
     next(error)
   }
 }
