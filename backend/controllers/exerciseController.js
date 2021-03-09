@@ -10,9 +10,19 @@ exports.getExercises = async (req, res, next) => {
 }
 
 exports.addExercise = async(req, res, next) => {
-  const { name, descritption, duration, date } = req.body;
+  const { username, description, duration, date } = req.body;
 
   try {
+    const exercise = new Exercise({
+      username,
+      description,
+      duration,
+      date
+    })
 
+    const newExercise = await exercise.save();
+    res.json(newExercise);
+  } catch(error){
+    next(error);
   }
 }
