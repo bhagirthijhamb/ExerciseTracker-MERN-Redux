@@ -35,3 +35,12 @@ exports.getOneExercise = async (req, res, next) => {
     next(error);
   }
 }
+
+exports.deleteExercise = async (req, res,next) => {
+  try {
+    await Exercise.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Exercise deleted'})
+  } catch(error){
+    next(error);
+  }
+}
