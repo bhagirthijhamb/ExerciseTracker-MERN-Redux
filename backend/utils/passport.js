@@ -1,11 +1,14 @@
 const passport = require('passport');
 const User = require('./../models/userModel');
+
+// Create JWT strategy
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const localStrategy = require('passport-local');
 
 // Create local strategy
+const localStrategy = require('passport-local');
 const localOptions = { usernameField: 'email' };
+
 const localLogin = new localStrategy(localOptions, function(email, password, done){
   // Verify this username and pssword, call done with the user if it is the correct email and password
   // otherwise, call done with false

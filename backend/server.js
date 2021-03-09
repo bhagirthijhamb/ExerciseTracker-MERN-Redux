@@ -1,18 +1,14 @@
 const path = require('path');
-const http = require('http');
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const connectDB = require('./../backend/config/db');
 const errorHandlingMiddlewares = require('./middlewares/errorHandleMiddleware');
-const { error } = require('console');
 
 require('./models/userModel');
 require('./models/exerciseModel');
 
 const app = express();
-
-
 
 dotenv.config();
 connectDB();
