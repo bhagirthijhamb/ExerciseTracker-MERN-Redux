@@ -26,3 +26,12 @@ exports.addExercise = async(req, res, next) => {
     next(error);
   }
 }
+
+exports.getOneExercise = async (req, res, next) => {
+  try {
+    const exercise = await Exercise.findById(req.params.id);
+    res.json(exercise);
+  } catch(err) {
+    next(error);
+  }
+}

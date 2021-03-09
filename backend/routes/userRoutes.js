@@ -15,7 +15,7 @@ module.exports = (app) => {
   //   res.send({ hi: 'there' });
   // })
 
-  app.get('/users', userController.getUsers);
+  app.get('/users', requireAuth, userController.getUsers);
 
   // before a user can go to the /signin route handler, we requireSignin
   // we have put requireSignin into a middleware (interesting approach)
