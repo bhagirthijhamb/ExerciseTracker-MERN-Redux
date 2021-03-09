@@ -1,7 +1,7 @@
 const jwt = require('jwt-simple');
 const User = require('../models/userModel');
 // const validators = require('./../utils/validators');
-const { validateSignupData } = require('./../utils/validators');
+const { validateSignupData } = require('../utils/validators');
 
 const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
@@ -51,5 +51,14 @@ exports.signup = async (req, res, next) => {
   } catch (error){
     console.log(error)
     next(error)
+  }
+}
+
+exports.getUsers = async (req, res, next) => {
+  try {
+    const users = await User.find();
+    res.json(users)
+  } catch (error){
+    next(error);
   }
 }

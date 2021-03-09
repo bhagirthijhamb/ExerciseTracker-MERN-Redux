@@ -18,7 +18,8 @@ connectDB();
 app.use(morgan('dev'));
 app.use(express.json());
 
-require('./routes/authRoutes')(app);
+require('./routes/userRoutes')(app);
+require('./routes/exerciseRoutes')(app);
 
 app.use(errorHandlingMiddlewares.notFound);
 app.use(errorHandlingMiddlewares.errorHandler);
