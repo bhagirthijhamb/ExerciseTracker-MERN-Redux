@@ -36,10 +36,26 @@ exports.getOneExercise = async (req, res, next) => {
   }
 }
 
-exports.deleteExercise = async (req, res,next) => {
+exports.deleteExercise = async (req, res, next) => {
   try {
     await Exercise.findByIdAndDelete(req.params.id);
     res.json({ message: 'Exercise deleted'})
+  } catch(error){
+    next(error);
+  }
+}
+
+exports.editExercise = async (req, res, next) => {
+  try {
+    const exercise = await Exercise.findById(req.params.id);
+    if (exercise){
+        exercise.username = req.body.username;
+        exercise.description = req.body.description;
+        exercise.duration = Number(req.body.duration);
+        exercise.date = Date.parse(req.body.date);
+    }
+    const updatedExercise = await exercise.save();
+    res.json(updatedExercise);
   } catch(error){
     next(error);
   }
